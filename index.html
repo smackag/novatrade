@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NovaTrade — 3D Algorithmic Intelligence Matrix</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#05070c;--white:#F0F4FF;
+  --blue:#4F8EF7;--blue-glow:rgba(79,142,247,0.35);
+  --purple:#7C5CFC;--purple-glow:rgba(124,92,252,0.4);
+  --green:#00D68F;--red:#FF4757;
+  --mid:#0b111e;
+  --card:rgba(15,22,38,0.7);
+  --border:rgba(255,255,255,0.08);
+  --muted:rgba(255,255,255,0.45);
+  --font-head:'Syne',sans-serif;--font-body:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--black);color:var(--white);font-family:var(--font-body);font-size:16px;line-height:1.6;overflow-x:hidden;
+  background-image: 
+    linear-gradient(rgba(79,142,247,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79,142,247,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  perspective: 1000px;
+}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--font-body);transition:all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)}
+
+/* NAV WITH 3D SHADOW */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;background:rgba(5,7,12,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+.logo-container{display:flex;align-items:center;gap:12px;cursor:pointer}
+
+/* PURE CSS 3D HOLOGRAPHIC LOGO ANIMATION */
+.logo-3d-asset{
+  width:28px;height:28px;position:relative;transform-style:preserve-3d;
+  animation:rotate3DLogo 8s linear infinite;
+}
+.logo-face{
+  position:absolute;width:100%;height:100%;border:2px solid var(--blue);
+  background:rgba(79,142,247,0.1);box-shadow:0 0 8px var(--blue-glow);
+}
+.face-front{transform:translateZ(14px)}
+.face-back{transform:rotateY(180deg) translateZ(14px);border-color:var(--purple);background:rgba(124,92,252,0.1)}
+.face-left{transform:rotateY(-90deg) translateZ(14px)}
+.face-right{transform:rotateY(90deg) translateZ(14px)}
+.face-top{transform:rotateX(90deg) translateZ(14px)}
+.face-bottom{transform:rotateX(-90deg) translateZ(14px)}
+
+@keyframes rotate3DLogo{
+  0%{transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg)}
+  100%{transform:rotateX(360deg) rotateY(360deg) rotateZ(360deg)}
+}
+
+.logo-text{font-family:var(--font-head);font-weight:800;font-size:1.5rem;letter-spacing:-0.03em}
+.logo-text span{background:linear-gradient(135deg,#4F8EF7,#7C5CFC);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--muted);font-size:0.88rem;font-weight:500;transition:all 0.2s}
+.nav-links a:hover{color:var(--white);text-shadow:0 0 10px var(--blue-glow)}
+.nav-right{display:flex;gap:1.2rem;align-items:center}
+
+/* STATUS & PROFILE BADGES */
+.social-badge{display:inline-flex;align-items:center;background:rgba(255,255,255,0.03);border:1px solid var(--border);padding:0.45rem 0.9rem;border-radius:100px;font-size:0.78rem;font-weight:600;color:var(--white);box-shadow:inset 0 1px 0 rgba(255,255,255,0.1);transition:all 0.2s}
+.social-badge:hover{background:var(--purple);border-color:var(--purple);transform:translateY(-2px);box-shadow:0 5px 15px var(--purple-glow)}
+
+.live-counter{display:flex;align-items:center;gap:8px;background:rgba(0,214,143,0.05);padding:0.45rem 0.9rem;border-radius:100px;border:1px solid rgba(0,214,143,0.2);font-size:0.8rem;font-weight:600;color:var(--green);box-shadow:0 0 10px rgba(0,214,143,0.1)}
+.eye-icon{animation:pulseGlow 2s infinite alternate}
+@keyframes pulseGlow{0%{transform:scale(0.9);opacity:0.7}100%{transform:scale(1.1);opacity:1}}
+
+.btn-blue{background:linear-gradient(135deg,#4F8EF7,#7C5CFC);color:#fff;padding:0.6rem 1.4rem;border-radius:100px;font-size:0.85rem;font-weight:700;border:none;box-shadow:0 5px 20px rgba(79,142,247,0.4), inset 0 1px 0 rgba(255,255,255,0.3)}
+.btn-blue:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 10px 25px rgba(79,142,247,0.6)}
+
+/* TICKER */
+.ticker-wrap{background:rgba(11,17,30,0.8);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0.6rem 0;overflow:hidden;margin-top:72px}
+.ticker-track{display:flex;gap:3rem;white-space:nowrap;animation:ticker 40s linear infinite;width:max-content}
+.ticker-item{display:flex;align-items:center;gap:0.5rem;font-size:0.8rem}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* HERO WITH PARALLAX DEPTH LAYER */
+.hero{min-height:85vh;display:flex;align-items:center;justify-content:space-between;padding:4rem 5%;position:relative;overflow:hidden;gap:4rem}
+.hero-content{flex:1;max-width:650px;z-index:2;transform:translateZ(30px)}
+
+/* FIXED INTERACTIVE LOCAL CANVAS WINDOW */
+.hero-3d-portal{
+  flex:1;height:480px;background:#060a12;border-radius:24px;position:relative;
+  border:1px solid rgba(79,142,247,0.25);overflow:hidden;
+  box-shadow:0 30px 60px rgba(0,0,0,0.8), 0 0 30px rgba(79,142,247,0.1);
+  transform:rotateY(-5deg) rotateX(5deg);transform-style:preserve-3d;
+  transition:transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.hero-3d-portal:hover{transform:rotateY(0deg) rotateX(0deg) scale(1.02);border-color:var(--blue)}
+.hero-3d-portal canvas{position:absolute;top:0;left:0;width:100%;height:100%;display:block}
+
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.3);color:var(--blue);padding:0.4rem 1rem;border-radius:100px;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.8rem;box-shadow:0 0 15px var(--blue-glow)}
+h1{font-family:var(--font-head);font-size:clamp(2.5rem,5vw,4.2rem);font-weight:800;line-height:1.05;letter-spacing:-0.04em;margin-bottom:1.5rem;text-shadow:0 10px 30px rgba(0,0,0,0.5)}
+.grad{background:linear-gradient(135deg,#4F8EF7,#7C5CFC);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:1.1rem;color:var(--muted);line-height:1.7;margin-bottom:2.5rem}
+
+/* 3D GLASS CARD COMPONENT STRUCTURE */
+.utility-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:2.5rem;padding:5rem 5%;background:#060913;position:relative}
+.panel-card{
+  background:var(--card);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:24px;padding:2.5rem;
+  box-shadow:0 20px 50px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+  transform-style:preserve-3d;transform:translateZ(0);transition:transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s;
+}
+.panel-card:hover{
+  transform:translateY(-8px) scale(1.01);
+  box-shadow:0 30px 60px rgba(79,142,247,0.15), inset 0 1px 0 rgba(255,255,255,0.2);
+  border-color:rgba(255,255,255,0.15);
+}
+.panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;transform:translateZ(20px)}
+.panel-title{font-family:var(--font-head);font-weight:800;font-size:1.4rem;letter-spacing:-0.02em}
+
+/* INTERACTIVE JOURNAL CALENDAR MATRIX */
+.calendar-controls{display:flex;align-items:center;gap:10px}
+.btn-cal{background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--white);padding:0.4rem 0.8rem;border-radius:8px;font-weight:700}
+.btn-cal:hover{background:var(--blue);border-color:var(--blue);transform:scale(1.05)}
+.calendar-month-year{font-size:1rem;font-weight:800;min-width:125px;text-align:center;font-family:var(--font-head)}
+.calendar-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;text-align:center;margin-bottom:12px;font-size:0.75rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:0.05em}
+.calendar-days-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+.cal-day-box{
+  aspect-ratio:1/1;background:rgba(5,7,12,0.5);border:1px solid var(--border);border-radius:10px;padding:8px;
+  display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;
+  transition:all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);box-shadow:inset 0 2px 4px rgba(0,0,0,0.3);
+}
+.cal-day-box:hover{border-color:var(--blue);transform:translateZ(15px) scale(1.08);box-shadow:0 10px 20px rgba(0,0,0,0.5), 0 0 10px var(--blue-glow)}
+.cal-day-box.active-selected{border-color:var(--purple);background:rgba(124,92,252,0.1);box-shadow:0 0 15px var(--purple-glow)}
+.cal-num{font-size:0.8rem;font-weight:700;color:rgba(255,255,255,0.6)}
+.cal-status-tag{font-size:0.7rem;font-weight:800;border-radius:4px;padding:1px 4px;text-align:center}
+.cal-day-box.has-win .cal-status-tag{background:rgba(0,214,143,0.15);color:var(--green)}
+.cal-day-box.has-loss .cal-status-tag{background:rgba(255,71,87,0.15);color:var(--red)}
+.empty-day{background:transparent;border:none;pointer-events:none;box-shadow:none}
+
+/* FORMS LAYER */
+.log-form{margin-top:2rem;background:rgba(5,7,12,0.4);border:1px solid var(--border);border-radius:16px;padding:1.5rem;transform:translateZ(10px)}
+.form-row{display:flex;gap:1rem;margin-top:1rem;flex-wrap:wrap}
+.input-field{flex:1;min-width:140px;background:rgba(5,7,12,0.8);border:1px solid var(--border);border-radius:8px;padding:0.6rem 1rem;color:#fff;font-size:0.88rem;transition:all 0.2s}
+.input-field:focus{outline:none;border-color:var(--blue);box-shadow:0 0 10px var(--blue-glow)}
+.btn-submit{padding:0.6rem 1.5rem;border-radius:8px;border:none;font-weight:700;font-size:0.88rem;background:linear-gradient(135deg,#4F8EF7,#7C5CFC);color:#fff}
+
+/* CHAT INTERFACE WITH DEPTH EXCLUSION */
+.chat-container{display:flex;flex-direction:column;height:440px;background:rgba(5,7,12,0.5);border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:inset 0 10px 30px rgba(0,0,0,0.5)}
+.chat-messages{flex:1;padding:1.5rem;overflow-y:auto;display:flex;flex-direction:column;gap:1.2rem;font-size:0.9rem}
+.msg{max-width:85%;padding:0.8rem 1.2rem;border-radius:14px;line-height:1.55;transform:translateZ(5px);box-shadow:0 4px 10px rgba(0,0,0,0.2)}
+.msg.ai{background:rgba(255,255,255,0.03);align-self:flex-start;border-bottom-left-radius:2px;border:1px solid var(--border)}
+.msg.user{background:linear-gradient(135deg,#4F8EF7,#7C5CFC);align-self:flex-end;border-bottom-right-radius:2px;box-shadow:0 8px 20px rgba(79,142,247,0.25)}
+.chat-input-bar{display:flex;border-top:1px solid var(--border);background:rgba(15,22,38,0.9);padding:0.4rem}
+.chat-input-bar input{flex:1;background:transparent;border:none;padding:0.8rem 1.2rem;color:#fff;font-size:0.9rem;outline:none}
+.chat-send-btn{background:transparent;border:none;color:var(--blue);padding:0 1.5rem;font-weight:800;font-size:0.9rem}
+
+/* ARCADE RADIAL MATRICES */
+.game-container{background:rgba(5,7,12,0.5);border:1px solid var(--border);border-radius:20px;padding:2rem;text-align:center;box-shadow:inset 0 10px 40px rgba(0,0,0,0.6)}
+.game-asset{font-family:var(--font-head);font-size:1.6rem;font-weight:800;margin-bottom:0.6rem;letter-spacing:0.02em}
+.game-price{font-size:2.4rem;font-weight:800;font-family:var(--font-head);color:var(--white);margin-bottom:1.5rem;text-shadow:0 0 15px rgba(255,255,255,0.1)}
+.game-actions{display:flex;gap:1.2rem;justify-content:center;margin-bottom:2rem}
+.btn-game{padding:0.8rem 2.2rem;border-radius:12px;font-weight:800;border:none;color:#fff;font-size:0.95rem;transform:translateZ(10px)}
+.btn-buy{background:var(--green);box-shadow:0 6px 20px rgba(0,214,143,0.3), inset 0 1px 0 rgba(255,255,255,0.2)}
+.btn-buy:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 12px 25px rgba(0,214,143,0.5)}
+.btn-sell{background:var(--red);box-shadow:0 6px 20px rgba(255,71,87,0.3), inset 0 1px 0 rgba(255,255,255,0.2)}
+.btn-sell:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 12px 25px rgba(255,71,87,0.5)}
+.game-stats{display:flex;justify-content:space-around;border-top:1px solid var(--border);padding-top:1.5rem}
+.game-stats span{color:var(--muted);font-size:0.85rem}
+.game-stats strong{color:var(--white);display:block;font-size:1.1rem;margin-top:4px;font-family:var(--font-head)}
+
+/* REVIEWS GRID STYLING */
+.reviews-section{padding:6rem 5%;background:#05070c;text-align:center}
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:2.5rem;margin-top:4rem}
+.review-card{background:var(--card);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:20px;padding:2.5rem;text-align:left;box-shadow:0 15px 40px rgba(0,0,0,0.4);transition:transform 0.3s}
+.review-card:hover{transform:translateY(-6px);border-color:var(--blue)}
+.review-text{font-size:1rem;color:rgba(255,255,255,0.8);margin-bottom:2rem;font-style:italic}
+.review-user{display:flex;align-items:center;gap:14px}
+.review-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#4F8EF7,#7C5CFC);display:flex;align-items:center;justify-content:center;font-weight:700;box-shadow:0 4px 10px rgba(79,142,247,0.3)}
+
+/* STATS BAR & FOOTER MATRIX */
+.stats-bar{display:flex;gap:4rem;padding:4rem 5%;border-top:1px solid var(--border);border-bottom:1px solid var(--border);flex-wrap:wrap;background:#05070c;justify-content:center}
+.stat-item{display:flex;flex-direction:column;align-items:center;text-align:center}
+.stat-num{font-family:var(--font-head);font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,#4F8EF7,#7C5CFC);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.stat-label{font-size:0.85rem;color:var(--muted);margin-top:6px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em}
+
+footer{padding:5rem 5%;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:3rem;border-top:1px solid var(--border);background:#04060a}
+.foot-brand p{font-size:0.88rem;color:var(--muted);margin-top:1rem;line-height:1.7;max-width:260px}
+.foot-col h5{font-size:0.8rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1.2rem}
+.foot-col a{display:block;font-size:0.9rem;color:var(--muted);margin-bottom:0.6rem;transition:color 0.2s}
+.foot-col a:hover{color:var(--blue);padding-left:4px}
+.foot-bottom{border-top:1px solid var(--border);padding:2rem 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;background:#04060a}
+
+@media(max-width:968px) {
+  .hero{flex-direction:column;padding-top:9rem}
+  .utility-grid{grid-template-columns:1fr}
+  .hero-3d-portal{width:100%;height:360px;transform:none}
+  footer{grid-template-columns:1fr}
+  .nav-right .social-badge{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="logo-container" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <div class="logo-3d-asset">
+      <div class="logo-face face-front"></div>
+      <div class="logo-face face-back"></div>
+      <div class="logo-face face-left"></div>
+      <div class="logo-face face-right"></div>
+      <div class="logo-face face-top"></div>
+      <div class="logo-face face-bottom"></div>
+    </div>
+    <div class="logo-text">Nova<span>Trade</span></div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#intelligence-hub">Dashboard</a></li>
+    <li><a href="#arcade">Trading Game</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://www.instagram.com/__novatrade/" target="_blank" class="social-badge">📸 @__novatrade</a>
+    <a href="https://www.instagram.com/6shea_/ " target="_blank" class="social-badge">🛡️ Support</a>
+    
+    <div class="live-counter">
+      <span class="eye-icon">🟢</span>
+      <span id="live-visitor-count">5,024</span> live operators
+    </div>
+    <button class="btn-blue" onclick="document.getElementById('intelligence-hub').scrollIntoView({behavior:'smooth'})">Launch Terminal</button>
+  </div>
+</nav>
+
+<!-- LIVE MARQUÉE TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track" id="ticker-track">
+    <div class="ticker-item"><span style="color:var(--muted)">BTC</span><span style="font-weight:700;font-family:var(--font-head)">$67,432</span><span style="color:var(--green);font-weight:700">▲ +3.4%</span></div>
+    <div class="ticker-item"><span style="color:var(--muted)">ETH</span><span style="font-weight:700;font-family:var(--font-head)">$3,521</span><span style="color:var(--green);font-weight:700">▲ +2.1%</span></div>
+    <div class="ticker-item"><span style="color:var(--muted)">SOL</span><span style="font-weight:700;font-family:var(--font-head)">$148.20</span><span style="color:var(--green);font-weight:700">▲ +6.8%</span></div>
+    <div class="ticker-item"><span style="color:var(--muted)">XAU/USD</span><span style="font-weight:700;font-family:var(--font-head)">$2,345</span><span style="color:var(--red);font-weight:700">▼ -0.4%</span></div>
+    <div class="ticker-item"><span style="color:var(--muted)">BTC</span><span style="font-weight:700;font-family:var(--font-head)">$67,432</span><span style="color:var(--green);font-weight:700">▲ +3.4%</span></div>
+    <div class="ticker-item"><span style="color:var(--muted)">ETH</span><span style="font-weight:700;font-family:var(--font-head)">$3,521</span><span style="color:var(--green);font-weight:700">▲ +2.1%</span></div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Open-Access Intelligence Pipeline</div>
+    <h1>Unrestricted <span class="grad">3D Predictive Node</span> Diagnostics</h1>
+    <p class="hero-sub">Access premium daily system signals, structural market telemetry, and diagnostic logs straight inside your localized 3D glassmorphic panel framework.</p>
+    <button class="btn-blue" style="padding: 1rem 2.5rem; font-size: 1rem;" onclick="document.getElementById('intelligence-hub').scrollIntoView({behavior:'smooth'})">Initialize Terminal View</button>
+  </div>
+  
+  <!-- FIXED NODE GRID CANVAS (NO MORE ACCESS DENIED) -->
+  <div class="hero-3d-portal">
+    <canvas id="matrixNodeCanvas"></canvas>
+  </div>
+</section>
+
+<!-- INTELLIGENCE FRAME GRID -->
+<section id="intelligence-hub" class="utility-grid">
+  
+  <!-- INTERACTIVE JOURNAL CALENDAR -->
+  <div class="panel-card">
+    <div class="panel-header">
+      <h3 class="panel-title">Interactive <span class="grad">Trading Matrix</span></h3>
+      <div class="calendar-controls">
+        <button class="btn-cal" onclick="changeMonth(-1)">◀</button>
+        <div class="calendar-month-year" id="calendar-month-year">June 2026</div>
+        <button class="btn-cal" onclick="changeMonth(1)">▶</button>
+      </div>
+    </div>
+    
+    <div class="calendar-weekdays">
+      <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+    </div>
+    <div class="calendar-days-grid" id="calendar-days-box"></div>
+
+    <div class="log-form" id="log-form-panel">
+      <h4 id="form-selected-date-title" style="font-size: 0.95rem; font-weight:700;">Select a matrix box grid above to log parameters</h4>
+      <div class="form-row">
+        <select id="trade-outcome-type" class="input-field">
+          <option value="win" style="color:var(--green)">WINNING LOG VECTOR (+)</option>
+          <option value="loss" style="color:var(--red)">LOSING LOG VECTOR (-)</option>
+        </select>
+        <input type="text" id="trade-amount-input" class="input-field" placeholder="PnL Change (e.g. +3.20%)">
+        <input type="time" id="trade-time-input" class="input-field" value="12:00">
+      </div>
+      <div class="form-row">
+        <input type="text" id="trade-strategy-notes" class="input-field" placeholder="Strategy layer (e.g., Daily Order Flow)">
+        <button class="btn-blue btn-submit" onclick="saveLoggedTrade()">Commit Log</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI CHAT TERMINAL -->
+  <div class="panel-card">
+    <div class="panel-header">
+      <h3 class="panel-title">AI Engine <span class="grad">Data Parsing Node</span></h3>
+    </div>
+    <div class="chat-container">
+      <div class="chat-messages" id="chat-box-root">
+        <div class="msg ai">Greetings operator. I am your integrated AI Core. Send over raw metric logs, session summaries, or calendar stats to verify execution risk profiles.</div>
+      </div>
+      <div class="chat-input-bar">
+        <input type="text" id="chat-user-input" placeholder="Query AI Terminal core node..." onkeydown="if(event.key==='Enter') sendChatMessage()">
+        <button class="chat-send-btn" onclick="sendChatMessage()">EXECUTE</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCADE CATEGORY -->
+<section id="arcade" style="padding: 5rem 5%;">
+  <div class="panel-card" style="max-width: 850px; margin: 0 auto;">
+    <div class="panel-header">
+      <h3 class="panel-title">NovaArcade: <span class="grad">Interactive Liquidity Simulator</span></h3>
+    </div>
+    <p style="color: var(--muted); margin-bottom: 2rem; font-size: 0.95rem; text-align: center;">Simulate rapid execution layers. Long or Short the live node to accrue target equity benchmarks.</p>
+    <div class="game-container">
+      <div class="game-asset">📊 NOVA / USD Volatility Index</div>
+      <div class="game-price" id="game-price-display">$10,000.00</div>
+      <div class="game-actions">
+        <button class="btn-game btn-buy" onclick="playTurn('buy')">EXECUTE LONG</button>
+        <button class="btn-game btn-sell" onclick="playTurn('sell')">EXECUTE SHORT</button>
+      </div>
+      <div class="game-stats">
+        <div><span>Sim Equity</span><strong id="game-balance">$1,000.00</strong></div>
+        <div><span>Open Vector</span><strong id="game-position">None</strong></div>
+        <div><span>Terminal Record</span><strong id="game-score">$1,000.00</strong></div>
+      </div>
+      <div class="game-msg" id="game-message" style="color: var(--blue); margin-top: 1.5rem; min-height: 24px; font-weight: 700;">Select processing trajectory to initialize engine simulation.</div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" class="reviews-section">
+  <h2 style="font-family: var(--font-head); font-size: 2.4rem; font-weight: 800;">Verified <span class="grad">Operator Logs</span></h2>
+  <p style="color: var(--muted); margin-top: 0.6rem;">Real-time execution analytics feedback loop feedback.</p>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div style="color:#FFC107; margin-bottom:0.6rem">★★★★★</div>
+      <p class="review-text">"The pure 3D glass environment matches high-performance execution rigs perfectly. Zero paywalls means my tracking overhead dropped to zero."</p>
+      <div class="review-user"><div class="review-avatar">M</div><div><h4 style="font-family:var(--font-head)">Marcus V.</h4><span>Crypto Flow Analyst</span></div></div>
+    </div>
+    <div class="review-card">
+      <div style="color:#FFC107; margin-bottom:0.6rem">★★★★★</div>
+      <p class="review-text">"Insanely seamless database entries. Logging my daily charts directly into the matrix module streamlines everything."</p>
+      <div class="review-user"><div class="review-avatar">A</div><div><h4 style="font-family:var(--font-head)">Amara K.</h4><span>Gold Momentum Trader</span></div></div>
+    </div>
+    <div class="review-card">
+      <div style="color:#FFC107; margin-bottom:0.6rem">★★★★★</div>
+      <p class="review-text">"Clean layout structure on Vercel architectures. The arcade module helps calibrate reaction timings during tight market compressions."</p>
+      <div class="review-user"><div class="review-avatar">J</div><div><h4 style="font-family:var(--font-head)">Jordan T.</h4><span>Scalping Specialist</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num">100% Free</div><div class="stat-label">Open-Sourced Grid</div></div>
+  <div class="stat-item"><div class="stat-num">Live Feeds</div><div class="stat-label">Telemetry Framework</div></div>
+  <div class="stat-item"><div class="stat-num">AI Core</div><div class="stat-label">Data Node Synthesis</div></div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-brand">
+    <div class="logo-container" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+      <div class="logo-text">Nova<span>Trade</span></div>
+    </div>
+    <p>Predictive 3D tracking matrices built for high-performance open-access session transparency.</p>
+  </div>
+  <div class="foot-col">
+    <h5>Modules</h5>
+    <a href="#intelligence-hub">Matrix Grid</a>
+    <a href="#arcade">NovaArcade</a>
+    <a href="#reviews">Operator Feedback</a>
+  </div>
+  <div class="foot-col">
+    <h5>Network Channels</h5>
+    <a href="https://www.instagram.com/__novatrade/" target="_blank">📈 Instagram Business Portal</a>
+    <a href="https://www.instagram.com/6shea_/ " target="_blank">🛡️ Support Management Team</a>
+    <p style="font-size: 0.8rem; color: var(--muted); margin-top: 1.5rem;">&copy; 2026 NovaTrade Systems.</p>
+  </div>
+</footer>
+
+<script>
+// Canvas Engine: 3D Interlinked Particle Node Constellation
+const canvas = document.getElementById('matrixNodeCanvas');
+const ctx = canvas.getContext('2d');
+
+let width = canvas.width = canvas.offsetWidth;
+let height = canvas.height = canvas.offsetHeight;
+
+window.addEventListener('resize', () => {
+  if(canvas.offsetWidth) {
+    width = canvas.width = canvas.offsetWidth;
+    height = canvas.height = canvas.offsetHeight;
+  }
+});
+
+const particles = [];
+const particleCount = 45;
+
+for (let i = 0; i < particleCount; i++) {
+  particles.push({
+    x: Math.random() * width,
+    y: Math.random() * height,
+    vx: (Math.random() - 0.5) * 0.8,
+    vy: (Math.random() - 0.5) * 0.8,
+    radius: Math.random() * 2 + 1.5
+  });
+}
+
+let mouse = { x: null, y: null };
+canvas.addEventListener('mousemove', (e) => {
+  const rect = canvas.getBoundingClientRect();
+  mouse.x = e.clientX - rect.left;
+  mouse.y = e.clientY - rect.top;
+});
+canvas.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+
+function animateMatrix() {
+  ctx.clearRect(0, 0, width, height);
+  
+  // Render deep perspective grid backing lines
+  ctx.strokeStyle = 'rgba(79, 142, 247, 0.04)';
+  ctx.lineWidth = 1;
+  for(let g = 0; g < width; g += 40) {
+    ctx.beginPath(); ctx.moveTo(g, 0); ctx.lineTo(g, height); ctx.stroke();
+  }
+  for(let g = 0; g < height; g += 40) {
+    ctx.beginPath(); ctx.moveTo(0, g); ctx.lineTo(width, g); ctx.stroke();
+  }
+
+  // Draw and calculate particles
+  particles.forEach(p => {
+    p.x += p.vx; p.y += p.vy;
+    if (p.x < 0 || p.x > width) p.vx *= -1;
+    if (p.y < 0 || p.y > height) p.vy *= -1;
+
+    if (mouse.x !== null) {
+      const dx = mouse.x - p.x;
+      const dy = mouse.y - p.y;
+      const dist = Math.hypot(dx, dy);
+      if (dist < 100) {
+        p.x -= (dx / dist) * 0.3;
+        p.y -= (dy / dist) * 0.3;
+      }
+    }
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(124, 92, 252, 0.7)';
+    ctx.fill();
+  });
+
+  // Link adjacent constellation lines
+  for (let i = 0; i < particleCount; i++) {
+    for (let j = i + 1; j < particleCount; j++) {
+      const dist = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
+      if (dist < 90) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(79, 142, 247, ${0.25 - dist / 90})`;
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(animateMatrix);
+}
+animateMatrix();
+
+// Visitor Counter Logic
+let baseVisitors = 5024;
+function updateVisitorCounter() {
+  baseVisitors += Math.floor(Math.random() * 20) - 10;
+  document.getElementById('live-visitor-count').innerText = baseVisitors.toLocaleString();
+}
+setInterval(updateVisitorCounter, 2500);
+
+// Calendar System Core Engine
+let currentDateObj = new Date(2026, 5, 18);
+let selectedDateKey = "";
+let journalDatabase = {
+  "2026-5-4": { type: "win", amount: "+4.91%", hour: "09:30", notes: "Daily Target Matrix Match" },
+  "2026-5-12": { type: "loss", amount: "-1.20%", hour: "14:15", notes: "Order Flow Fakeout Shift" }
+};
+const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+function renderCalendarStructure() {
+  const year = currentDateObj.getFullYear();
+  const month = currentDateObj.getMonth();
+  document.getElementById('calendar-month-year').innerText = `${monthNames[month]} ${year}`;
+  const gridContainer = document.getElementById('calendar-days-box');
+  gridContainer.innerHTML = "";
+  
+  const firstDayIndex = new Date(year, month, 1).getDay();
+  const totalDays = new Date(year, month + 1, 0).getDate();
+  
+  for (let i = 0; i < firstDayIndex; i++) {
+    const emptyNode = document.createElement('div');
+    emptyNode.className = "cal-day-box empty-day";
+    gridContainer.appendChild(emptyNode);
+  }
+  
+  for (let day = 1; day <= totalDays; day++) {
+    const dayBox = document.createElement('div');
+    dayBox.className = "cal-day-box";
+    const lookupKey = `${year}-${month}-${day}`;
+    
+    if (journalDatabase[lookupKey]) {
+      const dataEntry = journalDatabase[lookupKey];
+      dayBox.classList.add(dataEntry.type === 'win' ? 'has-win' : 'has-loss');
+      dayBox.innerHTML = `<span class="cal-num">${day}</span><span class="cal-status-tag">${dataEntry.amount}</span>`;
+    } else {
+      dayBox.innerHTML = `<span class="cal-num">${day}</span>`;
+    }
+    if(lookupKey === selectedDateKey) dayBox.classList.add('active-selected');
+    dayBox.onclick = () => selectCalendarDay(year, month, day);
+    gridContainer.appendChild(dayBox);
+  }
+}
+
+function changeMonth(direction) {
+  currentDateObj.setMonth(currentDateObj.getMonth() + direction);
+  renderCalendarStructure();
+}
+
+function selectCalendarDay(year, month, day) {
+  selectedDateKey = `${year}-${month}-${day}`;
+  renderCalendarStructure();
+  document.getElementById('form-selected-date-title').innerHTML = `Log parameters for block: <span style="color:var(--blue)">${monthNames[month]} ${day}, ${year}</span>`;
+}
+
+function saveLoggedTrade() {
+  if (!selectedDateKey) {
+    alert("Please isolate an open 3D tracking grid block element first.");
+    return;
+  }
+  const amt = document.getElementById('trade-amount-input').value.trim() || "0%";
+  const type = document.getElementById('trade-outcome-type').value;
+  const hour = document.getElementById('trade-time-input').value;
+  const notes = document.getElementById('trade-strategy-notes').value.trim() || "Manual Signal Node";
+  
+  journalDatabase[selectedDateKey] = { type, amount: amt, hour, notes };
+  renderCalendarStructure();
+  
+  const chatBox = document.getElementById('chat-box-root');
+  chatBox.innerHTML += `<div class="msg ai">⚡ <strong>Telemetry Committed:</strong> Node entry [${selectedDateKey}] integrated to structural data base as ${type.toUpperCase()} (${amt}).</div>`;
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// Chat System Engine
+function sendChatMessage() {
+  const inputNode = document.getElementById('chat-user-input');
+  const query = inputNode.value.trim();
+  if (!query) return;
+  
+  const chatBox = document.getElementById('chat-box-root');
+  chatBox.innerHTML += `<div class="msg user">${query}</div>`;
+  inputNode.value = "";
+  chatBox.scrollTop = chatBox.scrollHeight;
+  
+  setTimeout(() => {
+    let lower = query.toLowerCase();
+    let reply = "Processing matrix structural telemetry. To calculate specific risk adjustments, provide the open entry parameter index nodes.";
+    if(lower.includes('hello') || lower.includes('hi')) {
+      reply = "Welcome terminal operator. Network nodes operational. Submit log matrices or system queries directly. For manual dashboard problems, reach out to support channels via the layout footer.";
+    } else if(lower.includes('loss') || lower.includes('failed')) {
+      reply = "Negative volatility path logged. System recommends structural alignment corrections. Downscale deployment units to mitigate trailing exposure.";
+    } else if(lower.includes('win') || lower.includes('profit')) {
+      reply = "Target parameters captured. High probability confluence vector confirmed. Lock milestone indexes to secure equity metrics.";
+    }
+    chatBox.innerHTML += `<div class="msg ai">🤖 ${reply}</div>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }, 600);
+}
+
+// Simulated Arcade Math Loop
+let currentAssetPrice = 10000.00;
+let virtualBalance = 1000.00;
+let currentHighscore = 1000.00;
+let position = null; let entryPrice = 0;
+
+function updatePriceTick() {
+  currentAssetPrice += (Math.random() * 200) - 98.5;
+  if(currentAssetPrice < 2000) currentAssetPrice = 10000;
+  document.getElementById('game-price-display').innerText = `$${currentAssetPrice.toFixed(2)}`;
+  
+  if (position) {
+    let currentProfit = 0;
+    if (position === 'buy') currentProfit = (currentAssetPrice - entryPrice) * 0.05;
+    if (position === 'sell') currentProfit = (entryPrice - currentAssetPrice) * 0.05;
+    const msgNode = document.getElementById('game-message');
+    msgNode.innerText = `Vector Active! Floating PnL Matrix: ${currentProfit >= 0 ? '+' : ''}$${currentProfit.toFixed(2)}`;
+    msgNode.style.color = currentProfit >= 0 ? 'var(--green)' : 'var(--red)';
+  }
+}
+setInterval(updatePriceTick, 600);
+
+function playTurn(type) {
+  const messageNode = document.getElementById('game-message');
+  if (!position) {
+    position = type; entryPrice = currentAssetPrice;
+    document.getElementById('game-position').innerText = `${type.toUpperCase()} @ $${entryPrice.toFixed(2)}`;
+    document.getElementById('game-position').style.color = type === 'buy' ? 'var(--green)' : 'var(--red)';
+  } else if (position === type) {
+    let delta = 0;
+    if (position === 'buy') delta = (currentAssetPrice - entryPrice) * 0.05;
+    if (position === 'sell') delta = (entryPrice - currentAssetPrice) * 0.05;
+    virtualBalance += delta;
+    if(virtualBalance > currentHighscore) currentHighscore = virtualBalance;
+    messageNode.innerText = `Execution Closed. Realized Vector Return: ${delta >= 0 ? '+' : ''}$${delta.toFixed(2)}`;
+    position = null;
+    document.getElementById('game-balance').innerText = `$${virtualBalance.toFixed(2)}`;
+    document.getElementById('game-score').innerText = `$${currentHighscore.toFixed(2)}`;
+    document.getElementById('game-position').innerText = "None";
+    document.getElementById('game-position').style.color = "var(--white)";
+  } else {
+    messageNode.innerText = `Conflict error. Close your current ${position.toUpperCase()} loop before executing alternative nodes.`;
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => { renderCalendarStructure(); });
+</script>
+</body>
+</html>
